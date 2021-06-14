@@ -1,0 +1,47 @@
+{
+  "properties": {
+    "displayName": "Require a tag on resources with alloed values",
+    "mode": "Indexed",
+    "description": "Enforces existence of a tag. Does not apply to resource groups.",
+    "metadata": {
+      "version": "1.0",
+      "category": "Tags"
+    },
+    "parameters": {
+      "tagName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+      "allowedValues": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Allowed Tag Values",
+          "description": "List of the allowed tag values, such as ['prod', 'dev', 'qa']"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "exists": "false"
+          },
+          {
+            "not": {
+              "value": "[concat('tags[', parameters('tagName'), ']')]",
+              "in": "[parameters('values')]"
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  },
+  "type": "Microsoft.Authorization/policyDefinitions"
+}

@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "displayName": "Require tag and value",
+    "policyType": "Custom",
+    "metadata": {
+      "category": "Tags"
+    },
+    "parameters": {
+      "tag-name": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Tag Name"
+        }
+      },
+      "allowedValues": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Allowed Tag Values"
+        }
+      }
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "Append a tag and its value from the resource group",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9ea02ca2-71db-412d-8b00-7c7ca9fcd32d",
+        "parameters": {
+          "tagName": {
+            "value": "[parameters('tag-name')]"
+          }
+        },
+        "groupNames": [
+          "Append"
+        ]
+      }
+    ],
+    "policyDefinitionGroups": [
+      {
+        "name": "Require"
+      },
+      {
+        "name": "Append"
+      }
+    ]
+  },
+  "type": "Microsoft.Authorization/policySetDefinitions"
+}
